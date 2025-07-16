@@ -12,10 +12,11 @@ const seed = async () => {
       { username: "user1", passwordHash: User.hashPassword("user111") },
       { username: "user2", passwordHash: User.hashPassword("user222") },
     ]);
+   const specificDate = new Date("2026-10-26T14:30:00"); 
     const polls = await Poll.bulkCreate([
-      {title: "Spiderverse", description:"A spider movie", status: "Published"},
-      {title: "Toy Story", description:"A toy movie", status: "Closed"},
-      {title: "Kingsman", description:"A king movie", status: "Drafted"},
+      {title: "Spiderverse", description:"A spider movie", status: "Published",closingDate:specificDate},
+      {title: "Toy Story", description:"A toy movie", status: "Closed",closingDate:specificDate},
+      {title: "Kingsman", description:"A king movie", status: "Drafted",closingDate:specificDate},
     ]);
     console.log(`Created ${polls.length} polls`)
 
