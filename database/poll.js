@@ -1,28 +1,28 @@
 const { DataTypes } = require("sequelize");
 const db = require("./db");
 
-const Poll = db.define("poll",{
-    title:{
-        type: DataTypes.STRING,
-        allowNull:false,
-        validate: {
+const Poll = db.define("poll", {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
       len: [3, 20],
     },
   },
-  description:{
+  description: {
     type: DataTypes.STRING,
-        allowNull:false,
-        validate: {
+    allowNull: false,
+    validate: {
       len: [3, 300],
     },
   },
-  status:{
+  status: {
     type: DataTypes.STRING,
-    allowNull:false,
+    allowNull: false,
   },
-  closingDate:{
+  closingDate: {
     type: DataTypes.DATE,
-    allowNull:false,
+    allowNull: false,
   }
 
 })
