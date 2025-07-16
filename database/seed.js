@@ -1,5 +1,6 @@
 const db = require("./db");
 const { User } = require("./index");
+const {Poll} = require("./index");
 
 const seed = async () => {
   try {
@@ -11,6 +12,12 @@ const seed = async () => {
       { username: "user1", passwordHash: User.hashPassword("user111") },
       { username: "user2", passwordHash: User.hashPassword("user222") },
     ]);
+    const polls = await Poll.bulkCreate([
+      {title: "Spiderverse", description:"A spider movie", status: "Published"},
+      {title: "Toy Story", description:"A toy movie", status: "Closed"},
+      {title: "Kingsman", description:"A king movie", status: "Drafted"},
+    ]);
+    console.log(`Created ${polls.length} polls`)
 
     console.log(`👤 Created ${users.length} users`);
 
