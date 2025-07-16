@@ -19,6 +19,11 @@ const Poll = db.define("poll",{
   status:{
     type: DataTypes.STRING,
     allowNull:false,
+  },
+  closingDate:{
+    type: DataTypes.DATE,
+    allowNull:false,
   }
+
 })
 module.exports = Poll;
