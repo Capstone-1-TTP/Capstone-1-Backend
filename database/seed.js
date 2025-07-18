@@ -31,9 +31,9 @@ const seed = async () => {
 
     // Ballot table dummy data - Charly
     const ballots= await Ballot.bulkCreate([
-      {userId: users[0].id, pollId: polls[0].id, optionRanking: [], isSubmitted: true},
-      {userId: users[1].id, pollId: polls[1].id, optionRanking: [], isSubmitted: false},
-      {userId: users[2].id, pollId: polls[2].id, optionRanking: [], isSubmitted: true}
+      {userId: users[0].id, pollId: polls[0].id, optionsRanking: [], isSubmitted: true},
+      {userId: users[1].id, pollId: polls[1].id, optionsRanking: [], isSubmitted: false},
+      {userId: users[2].id, pollId: polls[2].id, optionsRanking: [], isSubmitted: true}
     ]);
 
     console.log(`Created ${users.length} users`);
