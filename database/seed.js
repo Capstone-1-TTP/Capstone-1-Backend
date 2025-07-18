@@ -12,9 +12,9 @@ const seed = async () => {
 
     // User table dummy data - William
     const users = await User.bulkCreate([
-      { username: "admin", passwordHash: User.hashPassword("admin123") },
-      { username: "user1", passwordHash: User.hashPassword("user111") },
-      { username: "user2", passwordHash: User.hashPassword("user222") },
+      { username: "admin", passwordHash: User.hashPassword("admin123"), firstName: "Alice", lastName: "Admin", email: "admin@example.com", profilePic: "https://i.pravatar.cc/150?img=1"},
+      { username: "user1", passwordHash: User.hashPassword("user111"), firstName: "Bob", lastName: "Builder", email: "bob@example.com", profilePic: "https://i.pravatar.cc/150?img=1"},
+      { username: "user2", passwordHash: User.hashPassword("user222"), firstName: "Carol", lastName: "Coder", email: "carol@example.com", profilePic: "https://i.pravatar.cc/150?img=1"},
     ]);
 
     // Poll table dummy data - Bilal
