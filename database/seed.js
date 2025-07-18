@@ -1,6 +1,7 @@
 const db = require("./db");
 const { User } = require("./index");
 const { Poll } = require("./index");
+const { Ballot } = require("./index");
 
 const seed = async () => {
   try {
@@ -29,6 +30,11 @@ const seed = async () => {
     // Emmanuel: coming soon...
 
     // Ballot table dummy data - Charly
+    const ballots= await Ballot.bulkCreate([
+      {userId: users[0].id, pollId: polls[0].id, optionRanking: [], isSubmitted: true},
+      {userId: users[1].id, pollId: polls[1].id, optionRanking: [], isSubmitted: false},
+      {userId: users[2].id, pollId: polls[2].id, optionRanking: [], isSubmitted: true}
+    ]);
 
     console.log(`Created ${users.length} users`);
     console.log(`Created ${polls.length} polls`);
