@@ -23,7 +23,7 @@ const Poll = db.define("poll", {
   closingDate: {
     type: DataTypes.DATE,
     allowNull: false,
-  }
+  },
+});
 
-})
 module.exports = Poll;
