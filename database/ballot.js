@@ -10,7 +10,7 @@ const Ballot = db.define("ballot", {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    rankings: {
+    optionsRanking: {
         type: DataTypes.JSONB,
         allowNull: false,
     },
