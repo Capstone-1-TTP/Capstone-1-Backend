@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 const testDbRouter = require("./test-db");
 const polls = require("./polls");
-const app = express();
+const ballots = require("./ballots");
 
 router.use("/polls", polls);
 router.use("/test-db", testDbRouter);
-app.use(express.json());
-
+router.use("/ballots", ballots);
 
 
 module.exports = router;
