@@ -12,6 +12,24 @@ router.get("/", async (req, res) => {
     console.error("Failed to fetch poll data", error);
   }
 });
+router.get("/mypolls/:userId", async (req, res) => {
+    const userId = Number(req.params.userId); 
+    try {
+        console.log("Fetching user's polls");
+        const polls = await Poll.findAll({
+        where: { userId: userId },
+        });
+        console.log(`Found ${polls} polls for user ${req.params.userId}`);
+        if (polls.length > 0) {
+        res.status(200).json(polls);
+        } else {
+        res.status(404).json({ error: "No polls found for this user" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch user's polls" });
+    }
+    });
+
 router.get("/:id", async (req, res) => {
   try {
     const polls = await Poll.findByPk(req.params.id);
@@ -93,6 +111,7 @@ router.patch("/:id", async (req, res) => {
         res.status(500).json({ error: "Failed to update poll..." });
     }
 });
+
     
 
 module.exports = router;
