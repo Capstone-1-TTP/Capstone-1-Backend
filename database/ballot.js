@@ -2,6 +2,10 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 
 const Ballot = db.define("ballot", {
+    ballotId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
     userId: {
         type: DataTypes.INTEGER,
         allowNull: true,
