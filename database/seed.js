@@ -21,10 +21,12 @@ const seed = async () => {
     // Poll table dummy data - Bilal
     const specificDate = new Date("2026-10-26T14:30:00");
     const polls = await Poll.bulkCreate([
-      { title: "Spiderverse", description: "A spider movie", status: "Published", closingDate: specificDate },
+      {userId:users[0].id, title: "Spiderverse", description: "A spider movie", status: "Published", closingDate: specificDate },
       { title: "Toy Story", description: "A toy movie", status: "Closed", closingDate: specificDate },
       { title: "Kingsman", description: "A king movie", status: "Drafted", closingDate: specificDate },
+      { title: "Avatar", description: "A blue movie", status: "Published", closingDate: specificDate },
     ]);
+
 
     // Option table dummy data - Emmanuel
     // Emmanuel: coming soon...
