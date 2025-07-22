@@ -6,21 +6,21 @@ const bcrypt = require("bcrypt");
 const User = db.define("user", {
   firstName: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     validate: {
       len: [1, 30],
     },
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     validate: {
       len: [1, 30],
     },
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     unique: true,
     validate: {
       isEmail: true, 
@@ -28,7 +28,7 @@ const User = db.define("user", {
   },
   passwordHash: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   auth0Id: {
     type: DataTypes.STRING,
