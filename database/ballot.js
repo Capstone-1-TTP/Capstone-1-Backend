@@ -11,7 +11,7 @@ const Ballot = db.define("ballot", {
         allowNull: false,
     },
     optionsRanking: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
     },
     isSubmitted: {
