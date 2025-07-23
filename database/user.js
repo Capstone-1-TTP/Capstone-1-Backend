@@ -2,37 +2,33 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 const bcrypt = require("bcrypt");
 
-// User Model
+// User model for database
 const User = db.define("user", {
   firstName: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     validate: {
-      len: [2, 30]
+      len: [1, 30],
     },
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: true,
-    validate: {
-      len: [2, 30]
-    },
-  },
-  username: {
-    type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
     validate: {
-      len: [3, 20],
+      len: [1, 30],
     },
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,  // <-- Consider changing to "false" if we're collecting email during sign up in the future
-    unique: true,     
+    allowNull: false,
+    unique: true,
     validate: {
       isEmail: true, 
     },
+  },
+  passwordHash: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   auth0Id: {
     type: DataTypes.STRING,
@@ -40,10 +36,6 @@ const User = db.define("user", {
     unique: true,
   },
   profilePic: {
-    type: DataTypes.STRING,
-    defaultValue: "", 
-  }, 
-  passwordHash: {
     type: DataTypes.STRING,
     allowNull: true,
   },
