@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: 'https://capstone-1-frontend-rho.vercel.app',
     credentials: true,
   })
 );
