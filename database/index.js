@@ -4,19 +4,19 @@ const Poll = require("./poll");
 const Ballot = require("./ballot");
 const Option = require("./option");
 
-// userPoll reference
+// userPoll reference - connects User and Poll tables
 Poll.belongsTo(User);
 User.hasMany(Poll);
 
-// userBallot reference
+// userBallot reference - connects User and Ballot tables
 Ballot.belongsTo(User);
 User.hasMany(Ballot);
 
-// pollBallot reference
+// pollBallot reference - connects Poll and Ballot tables
 Ballot.belongsTo(Poll);
 Poll.hasMany(Ballot);
 
-// pollOption reference
+// pollOption reference - connects Poll and Option tables
 Option.belongsTo(Poll);
 Poll.hasMany(Option);
 
