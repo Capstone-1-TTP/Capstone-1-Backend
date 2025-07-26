@@ -6,6 +6,30 @@ const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
+// Middleware to require a valid JWT and fetch the user
+const requireUser = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findByPk(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    req.user = user; 
+    next();
+  } catch (error) {
+    console.error("Auth error in requireUser:", error);
+    res.status(401).json({ error: "Invalid or expired token" });
+  }
+};
+
 // Middleware to authenticate JWT tokens
 const authenticateJWT = (req, res, next) => {
   const token = req.cookies.token;
@@ -148,7 +172,7 @@ router.post("/signup", async (req, res) => {
 
     res.send({
       message: "User created successfully",
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, profilePic: user.profilePic }
     });
   } catch (error) {
     console.error("Signup error:", error);
@@ -198,7 +222,7 @@ router.post("/login", async (req, res) => {
 
     res.send({
       message: "Login successful",
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, profilePic: user.profilePic },
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -213,19 +237,23 @@ router.post("/logout", (req, res) => {
 });
 
 // Get current user route (protected)
-router.get("/me", (req, res) => {
-  const token = req.cookies.token;
+router.get("/me", requireUser, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-  if (!token) {
-    return res.send({});
+    res.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePic: user.profilePic,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch authenticated user" });
   }
-
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).send({ error: "Invalid or expired token" });
-    }
-    res.send({ user: user });
-  });
 });
 
 module.exports = { router, authenticateJWT };
