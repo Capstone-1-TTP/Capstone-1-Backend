@@ -3,7 +3,7 @@ const db = require("./db");
 
 const Ballot = db.define("ballot", {
     optionsRanking: {
-        type: DataTypes.ARRAY,
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
     },
     isSubmitted: {

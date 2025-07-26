@@ -6,6 +6,30 @@ const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
+// Middleware to require a valid JWT and fetch the user
+const requireUser = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findByPk(decoded.id);
+
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    req.user = user; 
+    next();
+  } catch (error) {
+    console.error("Auth error in requireUser:", error);
+    res.status(401).json({ error: "Invalid or expired token" });
+  }
+};
+
 // Middleware to authenticate JWT tokens
 const authenticateJWT = (req, res, next) => {
   const token = req.cookies.token;
@@ -104,12 +128,12 @@ router.post("/auth0", async (req, res) => {
 // Signup route
 router.post("/signup", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password, firstName, lastName, profilePic } = req.body;
 
-    if (!username || !password) {
+    if (!email || !password) {
       return res
         .status(400)
-        .send({ error: "Username and password are required" });
+        .send({ error: "Email and password are required" });
     }
 
     if (password.length < 6) {
@@ -119,22 +143,21 @@ router.post("/signup", async (req, res) => {
     }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ where: { username } });
+    const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(409).send({ error: "Username already exists" });
+      return res.status(409).send({ error: "Email already exists" });
     }
 
     // Create new user
     const passwordHash = User.hashPassword(password);
-    const user = await User.create({ username, passwordHash });
+    const user = await User.create({ email, passwordHash, firstName, lastName, profilePic });
 
     // Generate JWT token
     const token = jwt.sign(
       {
         id: user.id,
-        username: user.username,
-        auth0Id: user.auth0Id,
         email: user.email,
+        auth0Id: user.auth0Id,
       },
       JWT_SECRET,
       { expiresIn: "24h" }
@@ -149,7 +172,7 @@ router.post("/signup", async (req, res) => {
 
     res.send({
       message: "User created successfully",
-      user: { id: user.id, username: user.username },
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, profilePic: user.profilePic }
     });
   } catch (error) {
     console.error("Signup error:", error);
@@ -160,15 +183,15 @@ router.post("/signup", async (req, res) => {
 // Login route
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
-      res.status(400).send({ error: "Username and password are required" });
+    if (!email || !password) {
+      res.status(400).send({ error: "Email and password are required" });
       return;
     }
 
     // Find user
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findOne({ where: { email } });
     user.checkPassword(password);
     if (!user) {
       return res.status(401).send({ error: "Invalid credentials" });
@@ -183,9 +206,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       {
         id: user.id,
-        username: user.username,
-        auth0Id: user.auth0Id,
         email: user.email,
+        auth0Id: user.auth0Id,
       },
       JWT_SECRET,
       { expiresIn: "24h" }
@@ -200,7 +222,7 @@ router.post("/login", async (req, res) => {
 
     res.send({
       message: "Login successful",
-      user: { id: user.id, username: user.username },
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName, profilePic: user.profilePic },
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -215,19 +237,23 @@ router.post("/logout", (req, res) => {
 });
 
 // Get current user route (protected)
-router.get("/me", (req, res) => {
-  const token = req.cookies.token;
+router.get("/me", requireUser, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-  if (!token) {
-    return res.send({});
+    res.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePic: user.profilePic,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch authenticated user" });
   }
-
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).send({ error: "Invalid or expired token" });
-    }
-    res.send({ user: user });
-  });
 });
 
 module.exports = { router, authenticateJWT };
