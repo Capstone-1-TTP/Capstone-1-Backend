@@ -2,6 +2,11 @@ const { DataTypes } = require("sequelize");
 const db = require("./db");
 
 const Option = db.define("option", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     details: {
         type: DataTypes.STRING,
         allowNull: false,
