@@ -51,6 +51,7 @@ const User = db.define("user", {
   },
   isDisabled: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
     defaultValue: false,
   },
 });

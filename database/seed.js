@@ -15,6 +15,8 @@ const seed = async () => {
         passwordHash: User.hashPassword("admin1"),
         auth0Id: "",
         profilePic: "https://i.pravatar.cc/150?img=1",
+        isAdmin: true,
+        isDisabled: false,
       },
       { 
         firstName: "Bob",
@@ -23,6 +25,8 @@ const seed = async () => {
         passwordHash: User.hashPassword("user1"),
         auth0Id: "",
         profilePic: "https://i.pravatar.cc/150?img=1",
+        isAdmin: false,
+        isDisabled: false,
       },
       { 
         firstName: "Carol",
@@ -31,6 +35,8 @@ const seed = async () => {
         passwordHash: User.hashPassword("user2"),
         auth0Id: "",
         profilePic: "https://i.pravatar.cc/150?img=1",
+        isAdmin: false,
+        isDisabled: false,
       },
       { 
         firstName: "Elliot",
@@ -39,6 +45,8 @@ const seed = async () => {
         passwordHash: User.hashPassword("user3"),
         auth0Id: "",
         profilePic: "https://i.pravatar.cc/150?img=1",
+        isAdmin: false,
+        isDisabled: false,
       },
       { 
         firstName: "Olivia",
@@ -47,6 +55,8 @@ const seed = async () => {
         passwordHash: User.hashPassword("user4"),
         auth0Id: "",
         profilePic: "https://i.pravatar.cc/150?img=1",
+        isAdmin: false,
+        isDisabled: false,
       },
     ]);
 
@@ -60,6 +70,7 @@ const seed = async () => {
         closingDate: new Date("2026-10-26T14:30:00"),
         authRequired: true,
         link: "",
+        isDisabled: false,
         userId: users[0].id,
       },
       { 
@@ -70,6 +81,7 @@ const seed = async () => {
         closingDate: new Date("2025-9-15T18:30:00"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[0].id,
       },
       { 
@@ -80,6 +92,7 @@ const seed = async () => {
         closingDate: new Date("2025-11-1T23:59:59"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[1].id,
       },
       {
@@ -90,6 +103,7 @@ const seed = async () => {
         closingDate: new Date("2025-7-20T17:00:00"),
         authRequired: true,
         link: "",
+        isDisabled: false,
         userId: users[1].id,
       },
       { 
@@ -100,6 +114,7 @@ const seed = async () => {
         closingDate: new Date("2025-12-31T23:59:59"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[2].id,
       },
       { 
@@ -110,6 +125,7 @@ const seed = async () => {
         closingDate: new Date("2025-9-15T18:30:00"),
         authRequired: true,
         link: "",
+        isDisabled: false,
         userId: users[2].id,
       },
       {
@@ -120,6 +136,7 @@ const seed = async () => {
         closingDate: new Date("2025-5-15T17:00:00"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[3].id,
       },
       { 
@@ -130,6 +147,7 @@ const seed = async () => {
         closingDate: new Date("2026-10-26T14:30:00"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[3].id,
       },
       { 
@@ -140,6 +158,7 @@ const seed = async () => {
         closingDate: new Date("2025-6-25T21:00:00"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[4].id,
       },
       { 
@@ -150,6 +169,7 @@ const seed = async () => {
         closingDate: new Date("2025-10-5T12:30:00"),
         authRequired: false,
         link: "",
+        isDisabled: false,
         userId: users[4].id,
       },
     ]);

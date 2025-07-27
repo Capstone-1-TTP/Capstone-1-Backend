@@ -42,6 +42,11 @@ const Poll = db.define("poll", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  isDisabled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
