@@ -44,6 +44,15 @@ const User = db.define("user", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  isDisabled: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 // Instance method to check password
