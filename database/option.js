@@ -1,8 +1,12 @@
 const { DataTypes } = require("sequelize");
 const db = require("./db");
-// const Poll = require("./poll");
 
 const Option = db.define("option", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     details: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -10,9 +14,14 @@ const Option = db.define("option", {
             len: [1, 100],
         },
     },
+    pollId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: "poll",
+            key: "id",
+        },
+    },
 });
-
-// Option.belongsTo(Poll);
-// Poll.hasMany(Option);
 
 module.exports = Option;

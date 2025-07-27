@@ -16,8 +16,7 @@ router.get("/", async (req, res) => {
     console.error("Error fetching users:", error);
     res.status(500).json({
       error: "Failed to fetch users",
-      message:
-        "Check your database connection, and consider running your seed file: npm run seed",
+      message: "Check your database connection, and consider running your seed file: npm run seed",
     });
   }
 });

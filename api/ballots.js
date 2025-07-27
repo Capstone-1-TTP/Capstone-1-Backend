@@ -56,7 +56,6 @@ router.get("/:id", authenticateJWT, async(req, res) => {
     }
 });
 
-
 // ---------------------------------------------- Routes for a ballot (CRUD) ----------------------------------------------
 
 // Route and controller for submitting a ballot
@@ -142,7 +141,5 @@ router.delete("/:id", authenticateJWT, async(req, res) => {
         res.status(500).json({ error: "Error deleting ballot" });
     }
 });
-
-
 
 module.exports = router;
