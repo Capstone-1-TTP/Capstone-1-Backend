@@ -20,7 +20,6 @@ const Ballot = db.define("ballot", {
                     where: { pollId: this.pollId },
                     attributes: ['id'],
                 });
-                
                 const validOptionIds = validOptions.map(opt => opt.id);
                 const invalidIds = value.filter(id => !validOptionIds.includes(id));
                 
@@ -32,11 +31,10 @@ const Ballot = db.define("ballot", {
                 if (!value) return;
 
                 const uniqueValues = [...new Set(value)];
-                
                 if (uniqueValues.length !== value.length) {
                     throw new Error("Ranking cannot contain duplicate option IDs");
                 }
-            }
+            },
         },
     },
     isSubmitted: {
